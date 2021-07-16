@@ -1,0 +1,43 @@
+.Div {
+  width: 100%;
+  height: 3em;
+}
+
+.Form {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.Form input {
+  padding: 2em;
+  padding-right: 50px;
+  height: 100%;
+  border-radius: 50px;
+}
+
+.Form button {
+  border-radius: 50px;
+  margin-left: -60px;
+  height: 80%;
+  background-color: #dfeeea;
+}
+
+.Input {
+  padding: 0 0.5em;
+  border: 1px solid #2f5d62;
+}
+
+.Input:focus,
+.Input:active {
+  outline: none;
+  box-shadow: 0 0 3px #2f5d62;
+}
+
+@media (max-width: 600px) {
+  .Form {
+    width: 100%;
+  }
+}

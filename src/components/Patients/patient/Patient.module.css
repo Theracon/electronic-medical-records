@@ -1,0 +1,22 @@
+.Patient {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  height: 20vh;
+  padding: 1em;
+  margin: 1em auto;
+  border: 3px solid #5e8b7e;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  background-color: #fff;
+}
+
+.Patient h5 {
+  font-weight: bold;
+}
+
+.Header {
+  text-decoration: underline;
+}

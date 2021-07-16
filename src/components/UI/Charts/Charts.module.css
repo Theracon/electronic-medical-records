@@ -1,0 +1,6 @@
+.Charts {
+  width: 60%;
+  margin: 0 auto 10em auto;
+  display: flex;
+  flex-direction: column;
+}
