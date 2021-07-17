@@ -34,14 +34,27 @@ const patients = (props) => {
       </div>
     );
   } else {
-    return (
-      <div className={styles.Patients}>
-        <h3 className="display-6 lead" style={{ margin: "1em auto" }}>
-          All Patients
-        </h3>
-        {patients}
-      </div>
-    );
+    if (props.patients.length > 0) {
+      return (
+        <div className={styles.Patients}>
+          <h3 className="display-6 lead" style={{ margin: "1em auto" }}>
+            Patients
+          </h3>
+          {patients}
+        </div>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <div style={{ margin: "30vh auto" }}>
+            <p className="lead" style={{ margin: 0 }}>
+              NO PATIENTS TO DISPLAY.
+            </p>
+            <small>Try refining the filters.</small>
+          </div>
+        </React.Fragment>
+      );
+    }
   }
 };
 

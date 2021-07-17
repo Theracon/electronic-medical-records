@@ -22,6 +22,8 @@ class HWDashboard extends React.Component {
     },
 
     searchForPatientName: "",
+
+    patients: [],
   };
 
   toggleFilterOptions = () => {
@@ -29,6 +31,10 @@ class HWDashboard extends React.Component {
       showFilterOptions: !state.showFilterOptions,
     }));
   };
+
+  componentWillMount() {
+    this.setState({ patients: this.props.allPatients });
+  }
 
   componentDidMount() {
     this.setState({
@@ -38,6 +44,22 @@ class HWDashboard extends React.Component {
     this.props.onSwitchToHWUserMode();
     this.props.onGetPatients();
   }
+
+  onGetAllPatients = () => {
+    this.props.onGetPatients();
+  };
+
+  onGetPatientsByGender = (gender) => {
+    this.props.onGetPatientsByGender(gender);
+  };
+
+  onGetPatientsByAge = (ageFrom, ageTo) => {
+    this.props.onGetPatientsByAge(ageFrom, ageTo);
+  };
+
+  onGetPatientsByBMI = (bmiFrom, bmiTo) => {
+    this.props.onGetPatientsByBMI(bmiFrom, bmiTo);
+  };
 
   render() {
     const expirationDate = new Date(localStorage.getItem("expirationDate"));
@@ -63,6 +85,14 @@ class HWDashboard extends React.Component {
         <FilterPatients
           show={this.state.showFilterOptions}
           toggle={this.toggleFilterOptions}
+          getAllPatients={this.onGetAllPatients}
+          getPatientsByGender={(gender) => this.onGetPatientsByGender(gender)}
+          getPatientsByAge={(ageFrom, ageTo) =>
+            this.onGetPatientsByAge(ageFrom, ageTo)
+          }
+          getPatientsByBMI={(bmiFrom, bmiTo) =>
+            this.onGetPatientsByBMI(bmiFrom, bmiTo)
+          }
         />
         <Patients patients={this.props.allPatients} />
         <Charts />
@@ -75,7 +105,10 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
     loading: state.patients.loading,
+    patientsHeading: state.patients.patientsHeading,
     allPatients: state.patients.allPatients,
+    malePatients: state.patients.malePatients,
+    femalePatients: state.patients.femalePatients,
   };
 };
 
@@ -83,7 +116,18 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSwitchToHWUserMode: () =>
       dispatch(userModeActionCreators.switchToHWUserMode()),
+
     onGetPatients: () => dispatch(patientsActionCreators.getPatients()),
+
+    onGetPatientsByGender: (gender) =>
+      dispatch(patientsActionCreators.getPatientsByGender(gender)),
+
+    onGetPatientsByAge: (ageFrom, ageTo) => {
+      dispatch(patientsActionCreators.getPatientsByAge(ageFrom, ageTo));
+    },
+
+    onGetPatientsByBMI: (bmiFrom, bmiTo) =>
+      dispatch(patientsActionCreators.getPatientsByBMI(bmiFrom, bmiTo)),
   };
 };
 

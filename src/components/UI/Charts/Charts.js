@@ -2,9 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { Pie, Doughnut } from "react-chartjs-2";
 
+import * as patientsActionCreators from "../../../store/action-creators/patients";
 import styles from "./Charts.module.css";
 
 class Charts extends React.Component {
+  componentDidMount() {
+    this.props.onGetPatients();
+  }
+
   patientDataByGender = {
     labels: ["Male", "Female"],
     datasets: [
@@ -12,10 +17,7 @@ class Charts extends React.Component {
         label: "Gender",
         backgroundColor: ["#B21F00", "#C9DE00"],
         hoverBackgroundColor: ["#501800", "#4B5000"],
-        data: [
-          +this.props.malePatients.length,
-          +this.props.femalePatients.length,
-        ],
+        data: [+this.props.numMalePatients, +this.props.numFemalePatients],
       },
     ],
   };
@@ -28,21 +30,24 @@ class Charts extends React.Component {
         backgroundColor: ["#B21F00", "#C9DE00", "#2FDE00", "#00A6B4"],
         hoverBackgroundColor: ["#501800", "#4B5000", "#175000", "#003350"],
         data: [
-          +this.props.neonates.length,
-          +this.props.children.length,
-          +this.props.adults.length,
-          +this.props.elderly.length,
+          this.props.numNeonates,
+          this.props.numChildren,
+          this.props.numAdults,
+          this.props.numElderly,
         ],
       },
     ],
   };
 
   render() {
-    return (
-      <div className={styles.Charts}>
-        <h3 className="display-6 lead">Patients By Gender (All)</h3>
+    // Conditionally display pie chart
+    let pieChart = null;
+    if (this.props.loading) {
+      pieChart = <p className="lead text-center">CHART LOADING...</p>;
+    } else {
+      pieChart = (
         <Pie
-          data={this.patientDataByGender}
+          data={this.props.patientDataByGender}
           options={{
             title: {
               display: true,
@@ -55,10 +60,17 @@ class Charts extends React.Component {
             },
           }}
         />
-        <div style={{ margin: "50px 0" }}></div>
-        <h3 className="lead display-6">Patients By Age (All)</h3>
+      );
+    }
+
+    // Conditionally display doughnut chart
+    let doughnutChart = null;
+    if (this.props.loading) {
+      doughnutChart = <p className="lead text-center">CHART LOADING...</p>;
+    } else {
+      doughnutChart = (
         <Doughnut
-          data={this.patientDataByAge}
+          data={this.props.patientDataByAge}
           options={{
             title: {
               display: true,
@@ -71,6 +83,18 @@ class Charts extends React.Component {
             },
           }}
         />
+      );
+    }
+
+    return (
+      <div className={styles.Charts}>
+        <h3 className="display-6 lead">Patients By Gender: All</h3>
+        {pieChart}
+
+        <div style={{ margin: "70px 0" }}></div>
+
+        <h3 className="lead display-6">Patients By Age: All</h3>
+        {doughnutChart}
       </div>
     );
   }
@@ -78,13 +102,16 @@ class Charts extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    malePatients: state.patients.malePatients,
-    femalePatients: state.patients.femalePatients,
-    neonates: state.patients.neonates,
-    children: state.patients.children,
-    adults: state.patients.adults,
-    elderly: state.patients.elderly,
+    loading: state.patients.loading,
+    patientDataByGender: state.patients.patientDataByGender,
+    patientDataByAge: state.patients.patientDataByAge,
   };
 };
 
-export default connect(mapStateToProps)(Charts);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onGetPatients: () => dispatch(patientsActionCreators.getPatients()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Charts);
