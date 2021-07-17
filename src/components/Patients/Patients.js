@@ -36,7 +36,9 @@ const patients = (props) => {
   } else {
     return (
       <div className={styles.Patients}>
-        <h3 className="display-6 lead">All Patients</h3>
+        <h3 className="display-6 lead" style={{ margin: "1em auto" }}>
+          All Patients
+        </h3>
         {patients}
       </div>
     );

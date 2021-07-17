@@ -1,0 +1,36 @@
+.PatientDashboard {
+  width: 100%;
+  height: 100vh;
+}
+
+.ChatButton {
+  position: fixed;
+  bottom: 10vh;
+  right: 5vw;
+  display: flex;
+  align-items: center;
+  color: #2f5d62;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+  transition: transform 500ms;
+}
+
+.ChatButton:hover,
+.ChatButton:focus,
+.ChatButton:active {
+  opacity: 0.9;
+  transform: scale(1.2);
+}
+
+.ChatButton i {
+  font-size: 50px;
+  margin-left: 5px;
+}
+
+.ProfileData {
+  width: 100%;
+  height: 100%;
+  margin: 2em auto;
+  border-radius: 20px;
+}

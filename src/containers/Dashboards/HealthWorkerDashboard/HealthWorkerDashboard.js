@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import styles from "./HealthWorkerDashboard.module.css";
 import * as userModeActionCreators from "../../../store/action-creators/userModes";
@@ -12,39 +13,15 @@ import formatName from "../../../shared/utils/formatName";
 
 class HWDashboard extends React.Component {
   state = {
-    profileData: {
-      name: "John",
-      surname: "Doe",
-    },
+    showFilterOptions: false,
+
     filterOptions: {
-      name: "",
       age: "",
       gender: "",
       bmi: { from: "", to: "" },
     },
-    showFilterOptions: false,
-    patientDataByGender: {
-      labels: ["Male", "Female"],
-      datasets: [
-        {
-          label: "Gender",
-          backgroundColor: ["#B21F00", "#C9DE00"],
-          hoverBackgroundColor: ["#501800", "#4B5000"],
-          data: [65, 59],
-        },
-      ],
-    },
-    patientDataByAge: {
-      labels: ["Neonates", "1-17 Years", "18-64 Years", "65+ Years"],
-      datasets: [
-        {
-          label: "Age",
-          backgroundColor: ["#B21F00", "#C9DE00", "#2FDE00", "#00A6B4"],
-          hoverBackgroundColor: ["#501800", "#4B5000", "#175000", "#003350"],
-          data: [65, 59, 80, 81],
-        },
-      ],
-    },
+
+    searchForPatientName: "",
   };
 
   toggleFilterOptions = () => {
@@ -54,20 +31,29 @@ class HWDashboard extends React.Component {
   };
 
   componentDidMount() {
-    this.props.onSwitchToHWUserMode();
-    this.props.onGetPatients();
     this.setState({
       patients: this.props.allPatients,
     });
+
+    this.props.onSwitchToHWUserMode();
+    this.props.onGetPatients();
   }
 
   render() {
+    const expirationDate = new Date(localStorage.getItem("expirationDate"));
+    let redirectToLogin = null;
+
+    if (new Date() >= expirationDate) {
+      redirectToLogin = <Redirect to="/login" />;
+    }
+
     const surname = localStorage.getItem("surname");
     const name = localStorage.getItem("name");
     const displayName = formatName(surname, name);
 
     return (
       <React.Fragment>
+        {redirectToLogin}
         <div className={styles.DisplayDiv}>
           <p className={styles.DisplayName}>
             Hello, <span>Dr. {displayName}.</span>
@@ -79,10 +65,7 @@ class HWDashboard extends React.Component {
           toggle={this.toggleFilterOptions}
         />
         <Patients patients={this.props.allPatients} />
-        <Charts
-          patientDataByGender={this.state.patientDataByGender}
-          patientDataByAge={this.state.patientDataByAge}
-        />
+        <Charts />
       </React.Fragment>
     );
   }
@@ -91,7 +74,7 @@ class HWDashboard extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    patientsLoading: state.patients.loading,
+    loading: state.patients.loading,
     allPatients: state.patients.allPatients,
   };
 };

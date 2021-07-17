@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./Patient.module.css";
-import Image from "../../UserPhotos/userPhoto";
+import Image from "../../UserPhoto/userPhoto";
 import formatName from "../../../shared/utils/formatName";
 
 const patient = (props) => {

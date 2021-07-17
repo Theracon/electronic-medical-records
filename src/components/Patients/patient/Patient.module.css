@@ -29,10 +29,6 @@
   cursor: pointer;
 }
 
-IconsHolderSpan {
-  transition: all 2s;
-}
-
 .IconsHolderSpan i {
   font-size: 2em;
   margin: 2px 0;
