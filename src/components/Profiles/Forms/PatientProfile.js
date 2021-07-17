@@ -87,7 +87,7 @@ class PatientProfile extends React.Component {
         elementConfig: {
           options: [
             { value: "-1", displayValue: "State", disabled: true },
-            { value: "lga1", displayValue: "Lagos", disabled: false },
+            { value: "Lagos", displayValue: "Lagos", disabled: false },
           ],
         },
         value: "-1",
@@ -99,7 +99,7 @@ class PatientProfile extends React.Component {
         elementConfig: {
           options: [
             { value: "-1", displayValue: "LGA", disabled: true },
-            { value: "lga1", displayValue: "Ikeja", disabled: false },
+            { value: "Ikeja", displayValue: "Ikeja", disabled: false },
           ],
         },
         value: "-1",
@@ -116,7 +116,7 @@ class PatientProfile extends React.Component {
               disabled: true,
             },
             {
-              value: "warda",
+              value: "Adekunle Vill./adeniyi Jones/ogba",
               displayValue: "Adekunle Vill./adeniyi Jones/ogba",
               disabled: false,
             },

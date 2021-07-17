@@ -1,6 +1,19 @@
-.Div {
+.DisplayDiv {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
   width: 100%;
-  padding-right: 0.5em;
+  padding: 1em 1em 1em 0;
+  margin: 0 auto;
   text-align: right;
-  font-weight: bold;
+}
+
+.DisplayName {
+  width: fit-content;
+  height: fit-content;
+  font-family: "Poppins", sans-serif;
+}
+
+.DisplayName span {
+  text-decoration: underline;
 }

@@ -7,7 +7,7 @@ class Charts extends React.Component {
   render() {
     return (
       <div className={styles.Charts}>
-        <h3>Patients By Gender</h3>
+        <h3 className="display-6 lead">Patients By Gender (All)</h3>
         <Pie
           data={this.props.patientDataByGender}
           options={{
@@ -26,8 +26,11 @@ class Charts extends React.Component {
         <br />
         <br />
         <br />
+        <br />
+        <br />
+        <br />
 
-        <h3>Patients By Age</h3>
+        <h3 className="lead display-6">Patients By Age (All)</h3>
         <Doughnut
           data={this.props.patientDataByAge}
           options={{

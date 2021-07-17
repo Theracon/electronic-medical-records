@@ -2,10 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 
 import styles from "./HealthWorkerDashboard.module.css";
+import * as userModeActionCreators from "../../../store/action-creators/userModes";
+import * as patientsActionCreators from "../../../store/action-creators/patients";
 import Searchbar from "../../../components/UI/Searchbar/Searchbar";
 import FilterPatients from "../../../components/UI/FilterPatients/FilterPatients";
 import Patients from "../../../components/Patients/Patients";
 import Charts from "../../../components/UI/Charts/Charts";
+import formatName from "../../../shared/utils/formatName";
 
 class HWDashboard extends React.Component {
   state = {
@@ -13,48 +16,6 @@ class HWDashboard extends React.Component {
       name: "John",
       surname: "Doe",
     },
-    patients: [
-      {
-        name: "Ade Jaiyeoluwa Jacob",
-        age: 47,
-        gender: "male",
-        bmi: 22.6,
-        height: 163,
-        weight: 67,
-      },
-      {
-        name: "Fola Aina Yakubu",
-        age: 25,
-        gender: "male",
-        bmi: 25.4,
-        height: 170,
-        weight: 57,
-      },
-      {
-        name: "Victor Smart Ade",
-        age: 34,
-        gender: "male",
-        bmi: 21.7,
-        height: 182,
-        weight: 87,
-      },
-      {
-        name: "Zainab Ishaq Abdullahi",
-        age: 16,
-        gender: "female",
-        bmi: 23.1,
-        height: 167,
-        weight: 67,
-      },
-      {
-        name: "Lilo Chukwuemeka Ebuka",
-        age: 50,
-        gender: "female",
-        bmi: 25.2,
-        height: 165,
-        weight: 87,
-      },
-    ],
     filterOptions: {
       name: "",
       age: "",
@@ -92,13 +53,24 @@ class HWDashboard extends React.Component {
     }));
   };
 
+  componentDidMount() {
+    this.props.onSwitchToHWUserMode();
+    this.props.onGetPatients();
+    this.setState({
+      patients: this.props.allPatients,
+    });
+  }
+
   render() {
+    const surname = localStorage.getItem("surname");
+    const name = localStorage.getItem("name");
+    const displayName = formatName(surname, name);
+
     return (
       <React.Fragment>
-        <div className={styles.Div}>
-          <p>
-            Welcome: Dr. {this.state.profileData.surname + ", "}
-            {this.state.profileData.name.charAt(0)}.
+        <div className={styles.DisplayDiv}>
+          <p className={styles.DisplayName}>
+            Hello, <span>Dr. {displayName}.</span>
           </p>
         </div>
         <Searchbar />
@@ -106,7 +78,7 @@ class HWDashboard extends React.Component {
           show={this.state.showFilterOptions}
           toggle={this.toggleFilterOptions}
         />
-        <Patients patients={this.state.patients} />
+        <Patients patients={this.props.allPatients} />
         <Charts
           patientDataByGender={this.state.patientDataByGender}
           patientDataByAge={this.state.patientDataByAge}
@@ -119,7 +91,17 @@ class HWDashboard extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
+    patientsLoading: state.patients.loading,
+    allPatients: state.patients.allPatients,
   };
 };
 
-export default connect(mapStateToProps)(HWDashboard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSwitchToHWUserMode: () =>
+      dispatch(userModeActionCreators.switchToHWUserMode()),
+    onGetPatients: () => dispatch(patientsActionCreators.getPatients()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HWDashboard);

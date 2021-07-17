@@ -76,6 +76,7 @@ export const login = (email, password, props) => {
             const emails = doctors.map((doctor) => doctor.email);
             if (emails.indexOf(email) >= 0) {
               props.history.push("/hw-dashboard");
+              localStorage.setItem("email", email);
             } else {
               props.history.push("/patient-dashboard");
             }
@@ -126,6 +127,7 @@ export const authLogout = () => {
   localStorage.removeItem("expirationDate");
   localStorage.removeItem("userId");
   localStorage.removeItem("username");
+  localStorage.removeItem("email");
   return { type: actionTypes.AUTH_LOGOUT };
 };
 

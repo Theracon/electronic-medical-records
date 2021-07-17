@@ -1,24 +1,16 @@
 import React from "react";
 
 import styles from "./Patient.module.css";
-import UserImg from "../../UserPhotos/userPhotoMale";
+import Image from "../../UserPhotos/userPhoto";
+import formatName from "../../../shared/utils/formatName";
 
 const patient = (props) => {
-  const patientName = props.name;
-  const nameArr = patientName.split(" ");
-  const newNameArr = [];
-  newNameArr.push(nameArr[0]);
-  for (let i = 1; i < nameArr.length; i++) {
-    newNameArr.push(nameArr[i].charAt(0) + ".");
-  }
-  const newPatientName = newNameArr.join(" ");
-
   return (
     <div className={styles.Patient}>
       <div>
-        <UserImg />
+        <Image image={props.image} />
       </div>
-      <h5>{newPatientName}</h5>
+      <h5>{formatName(props.surname, props.name)}.</h5>
       <div>
         <p className={styles.Header}>Age</p>
         <p>{props.age}Y</p>
@@ -38,6 +30,16 @@ const patient = (props) => {
       <div>
         <p className={styles.Header}>Weight</p>
         <p>{props.weight}kg</p>
+      </div>
+      <div className={styles.IconsHolder}>
+        <span className={styles.IconsHolderSpan}>
+          <i className="fas fa-comment-alt"></i>
+          <small className={styles.HiddenTextDesc}>Start Chat</small>
+        </span>
+        <span className={styles.IconsHolderSpan}>
+          <i className="fas fa-file-alt"></i>
+          <small className={styles.HiddenTextDesc}>Write a report</small>
+        </span>
       </div>
     </div>
   );

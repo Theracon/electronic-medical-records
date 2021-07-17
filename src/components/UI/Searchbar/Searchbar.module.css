@@ -12,10 +12,14 @@
 }
 
 .Form input {
-  padding: 2em;
+  padding: 1em;
   padding-right: 50px;
   height: 100%;
   border-radius: 50px;
+}
+
+.Form input:focus {
+  box-shadow: none;
 }
 
 .Form button {

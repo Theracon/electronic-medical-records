@@ -20,3 +20,31 @@
 .Header {
   text-decoration: underline;
 }
+
+.IconsHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+IconsHolderSpan {
+  transition: all 2s;
+}
+
+.IconsHolderSpan i {
+  font-size: 2em;
+  margin: 2px 0;
+  color: #2f5d62;
+}
+
+.IconsHolderSpan:hover .HiddenTextDesc {
+  display: inline-block;
+}
+
+.HiddenTextDesc {
+  display: none;
+  font-size: 0.6em;
+  margin-left: 5px;
+}

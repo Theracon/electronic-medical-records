@@ -8,6 +8,8 @@ import ReduxThunk from "redux-thunk";
 import "./index.css";
 import authReducer from "./store/reducers/authentication";
 import profileReducer from "./store/reducers/createProfile";
+import patientsReducer from "./store/reducers/patients";
+import userModeReducer from "./store/reducers/userModes";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -19,6 +21,8 @@ const composeEnhancers =
 const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
+  patients: patientsReducer,
+  userMode: userModeReducer,
 });
 
 const store = createStore(

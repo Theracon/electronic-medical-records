@@ -1,5 +1,5 @@
 .Patients {
   width: 100%;
-  height: fit-content;
+  min-height: 50vh;
   margin-bottom: 10em;
 }

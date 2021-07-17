@@ -116,6 +116,8 @@ class HealthWorkerProfile extends React.Component {
       profileData[prop] = this.state.form[prop].value;
     }
     profileData.userType = "hw";
+    localStorage.setItem("surname", profileData.surname);
+    localStorage.setItem("name", profileData.name);
     this.props.onCreateHWProfile(profileData, this.props);
   };
 
