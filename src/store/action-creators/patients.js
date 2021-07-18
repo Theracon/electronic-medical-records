@@ -16,6 +16,7 @@ export const getPatientsFailed = (error) => {
 export const getPatients = () => {
   return (dispatch) => {
     dispatch(getPatientsStarted());
+
     axiosInstance
       .get("/patients.json")
       .then((response) => {
@@ -131,6 +132,98 @@ export const getPatientsByBMI = (bmiFrom, bmiTo) => {
           (patient) => +patient.bmi >= +bmiFrom && +patient.bmi <= +bmiTo
         );
         dispatch(syncGetPatientsByBMI(patientsByBMI));
+      })
+      .catch((error) => {
+        dispatch(getPatientsFailed(error));
+      });
+  };
+};
+
+export const syncGetPatientsByName = (patients) => {
+  return { type: actionTypes.GET_PATIENTS_BY_NAME, patients: patients };
+};
+
+export const getPatientsByName = (string) => {
+  return (dispatch) => {
+    dispatch(getPatientsStarted());
+
+    axiosInstance
+      .get("/patients.json")
+      .then((response) => {
+        const allPatients = [];
+
+        for (let key in response.data) {
+          allPatients.push({
+            id: key,
+            ...response.data[key],
+            bmi:
+              response.data[key].weight /
+              Math.pow(response.data[key].height / 100, 2),
+          });
+        }
+
+        const patientsByName = allPatients.filter((patient) => {
+          const patientName = [
+            ...patient.surname.toLowerCase().split(" "),
+            ...patient.name.toLowerCase().split(" "),
+          ].join(" ");
+
+          const patientName_2 = [
+            ...patient.name.toLowerCase().split(" "),
+            ...patient.surname.toLowerCase().split(" "),
+          ].join(" ");
+
+          const patientName_3 = [
+            ...patient.surname.toLowerCase().split(" "),
+            ...patient.name.toLowerCase().split(" "),
+          ].join("");
+
+          const patientName_4 = [
+            ...patient.name.toLowerCase().split(" "),
+            ...patient.surname.toLowerCase().split(" "),
+          ].join("");
+
+          return (
+            patientName.includes(string.toLowerCase()) ||
+            patientName_2.includes(string.toLowerCase()) ||
+            patientName_3.includes(string.toLowerCase()) ||
+            patientName_4.includes(string.toLowerCase())
+          );
+        });
+
+        dispatch(syncGetPatientsByName(patientsByName));
+      })
+      .catch((error) => {
+        dispatch(getPatientsFailed(error));
+      });
+  };
+};
+
+export const syncGetPatient = (patient) => {
+  return { type: actionTypes.GET_PATIENT, patient: patient };
+};
+
+export const getPatient = (email) => {
+  return (dispatch) => {
+    dispatch(getPatientsStarted());
+
+    const queryParams = `?orderBy="email"&equalTo="${email}"`;
+
+    axiosInstance
+      .get(`/patients.json${queryParams}`)
+      .then((response) => {
+        const patients = [];
+
+        for (let key in response.data) {
+          patients.push({
+            id: key,
+            ...response.data[key],
+            bmi:
+              response.data[key].weight /
+              Math.pow(response.data[key].height / 100, 2),
+          });
+        }
+        dispatch(syncGetPatient(patients[0]));
       })
       .catch((error) => {
         dispatch(getPatientsFailed(error));

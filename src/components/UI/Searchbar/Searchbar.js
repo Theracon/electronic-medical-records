@@ -13,14 +13,11 @@ class Searchbar extends React.Component {
           <div className={styles.Div}>
             <form className={`d-flex ${styles.Form}`}>
               <input
-                className={`form-control me-2 ${styles.Input}`}
+                className={styles.Input}
                 type="search"
-                placeholder="search..."
-                aria-label="Search"
+                placeholder="Start typing to search..."
+                onChange={(e) => this.props.getPatientsByName(e.target.value)}
               ></input>
-              <button className="btn btn-outline-success" type="submit">
-                <i className="fas fa-search"></i>
-              </button>
             </form>
           </div>
         </div>

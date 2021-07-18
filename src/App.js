@@ -13,6 +13,7 @@ import HealthWorkerProfile from "./components/Profiles/Forms/HealthWorkerProfile
 import PatientProfile from "./components/Profiles/Forms/PatientProfile";
 import HWDashboard from "./containers/Dashboards/HealthWorkerDashboard/HealthWorkerDashboard";
 import PatientDashboard from "./containers/Dashboards/PatientDashboard/PatientDashboard";
+import Encounter from "./containers/Encounter/Encounter";
 import Backdrop from "./components/UI/Backdrop/Backdrop";
 import Spinner from "./components/UI/Spinner/Spinner";
 
@@ -44,6 +45,7 @@ class App extends React.Component {
         <Route path="/patient-create-profile" component={PatientProfile} />
         <Route path="/hw-dashboard" component={HWDashboard} />
         <Route path="/patient-dashboard" component={PatientDashboard} />
+        <Route path="/encounter" component={Encounter} />
         <Route path="/" exact component={Homepage} />
       </Switch>
     );

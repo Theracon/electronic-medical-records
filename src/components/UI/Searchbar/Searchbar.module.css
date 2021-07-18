@@ -22,16 +22,14 @@
   box-shadow: none;
 }
 
-.Form button {
-  border-radius: 50px;
-  margin-left: -60px;
-  height: 80%;
-  background-color: #dfeeea;
-}
-
 .Input {
-  padding: 0 0.5em;
+  display: block;
+  margin: 0 auto;
+  width: 30vw;
+  padding: 1.5em;
   border: 1px solid #2f5d62;
+  border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .Input:focus,

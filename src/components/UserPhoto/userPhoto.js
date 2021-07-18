@@ -6,8 +6,8 @@ const Image = (props) => {
   return (
     <div>
       <img
-        className={styles.Img}
-        src={props.image}
+        className={props.class || styles.Img}
+        src={props.imageURL}
         style={props.style}
         alt="User."
       />

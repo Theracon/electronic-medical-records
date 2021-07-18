@@ -3,6 +3,7 @@ import updateObject from "../../shared/utils/updateObject";
 
 const initialState = {
   patientsHeading: "All Patients",
+  patient: null,
   allPatients: [],
   malePatients: [],
   femalePatients: [],
@@ -122,6 +123,14 @@ const showPatientsByBMI = (state, action) => {
   return updateObject(state, { allPatients: action.patients, loading: false });
 };
 
+const showPatientsByName = (state, action) => {
+  return updateObject(state, { allPatients: action.patients, loading: false });
+};
+
+const getPatient = (state, action) => {
+  return updateObject(state, { patient: action.patient, loading: false });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_PATIENTS_START:
@@ -136,6 +145,10 @@ const reducer = (state = initialState, action) => {
       return showPatientsByAge(state, action);
     case actionTypes.GET_PATIENTS_BY_BMI:
       return showPatientsByBMI(state, action);
+    case actionTypes.GET_PATIENTS_BY_NAME:
+      return showPatientsByName(state, action);
+    case actionTypes.GET_PATIENT:
+      return getPatient(state, action);
     default:
       return state;
   }

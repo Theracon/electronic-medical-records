@@ -30,7 +30,36 @@
 
 .ProfileData {
   width: 100%;
-  height: 100%;
+  height: fit-content;
   margin: 2em auto;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.ProfileDataText {
+  width: 50%;
+  height: fit-content;
+  border: 3px solid #2f5d62;
+  border-radius: 20px;
+  padding: 2em;
+  margin: 2em;
+}
+
+.ProfileDataText div {
+  width: fit-content;
+  margin: 0 auto 1em auto;
+}
+
+.ProfileDataText div h3 {
+  text-decoration: underline;
+}
+
+.Photo {
+  width: 170px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #2f5d62;
 }

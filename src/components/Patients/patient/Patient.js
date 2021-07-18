@@ -34,11 +34,11 @@ const patient = (props) => {
       <div className={styles.IconsHolder}>
         <span className={styles.IconsHolderSpan}>
           <i className="fas fa-comment-alt"></i>
-          <small className={styles.HiddenTextDesc}>Start Chat</small>
+          <small className={styles.HiddenTextDesc}>Start chat</small>
         </span>
         <span className={styles.IconsHolderSpan}>
           <i className="fas fa-file-alt"></i>
-          <small className={styles.HiddenTextDesc}>Write a report</small>
+          <small className={styles.HiddenTextDesc}>Create an encounter</small>
         </span>
       </div>
     </div>

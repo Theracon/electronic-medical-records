@@ -34,7 +34,8 @@ class FilterPatients extends React.Component {
 
   render() {
     let filterDisplay = null;
-    if (this.props.show) {
+
+    if (this.props.showControls) {
       filterDisplay = (
         <React.Fragment>
           <div>
@@ -115,7 +116,7 @@ class FilterPatients extends React.Component {
     return (
       <div className={styles.Container}>
         <div>
-          <i className="fas fa-filter" onClick={this.props.toggle}></i>
+          <i className="fas fa-filter" onClick={this.props.toggleControls}></i>
         </div>
         {filterDisplay}
       </div>

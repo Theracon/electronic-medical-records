@@ -69,15 +69,21 @@ export const login = (email, password, props) => {
         axiosInstance
           .get("/doctors.json")
           .then((response) => {
-            const doctors = [];
+            const healthWorkers = [];
+
             for (let key in response.data) {
-              doctors.push(response.data[key]);
+              healthWorkers.push(response.data[key]);
             }
-            const emails = doctors.map((doctor) => doctor.email);
+
+            const emails = healthWorkers.map(
+              (healthWorker) => healthWorker.email
+            );
+
             if (emails.indexOf(email) >= 0) {
-              props.history.push("/hw-dashboard");
               localStorage.setItem("email", email);
+              props.history.push("/hw-dashboard");
             } else {
+              localStorage.setItem("email", email);
               props.history.push("/patient-dashboard");
             }
           })
@@ -128,6 +134,10 @@ export const authLogout = () => {
   localStorage.removeItem("userId");
   localStorage.removeItem("username");
   localStorage.removeItem("email");
+  localStorage.removeItem("patientName");
+  localStorage.removeItem("name");
+  localStorage.removeItem("surname");
+  localStorage.removeItem("patientImage");
   return { type: actionTypes.AUTH_LOGOUT };
 };
 
