@@ -3,7 +3,9 @@ import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
 import styles from "./App.module.css";
-import * as actionCreators from "./store/action-creators/authentication";
+import * as authActionCreators from "./store/action-creators/authentication";
+import * as patientsActionCreators from "./store/action-creators/patients";
+import * as encountersActionCreators from "./store/action-creators/encounters";
 import Navbar from "./components/UI/Navigation/navbar";
 import Homepage from "./components/Homepage/Homepage";
 import Signup from "./containers/Authentication/Signup";
@@ -14,15 +16,19 @@ import PatientProfile from "./components/Profiles/Forms/PatientProfile";
 import HWDashboard from "./containers/Dashboards/HealthWorkerDashboard/HealthWorkerDashboard";
 import PatientDashboard from "./containers/Dashboards/PatientDashboard/PatientDashboard";
 import Encounter from "./containers/Encounter/Encounter";
+import Encounters from "./containers/Encounters/Encounters";
+import Messenger from "./containers/Messenger/Messenger";
 import Backdrop from "./components/UI/Backdrop/Backdrop";
 import Spinner from "./components/UI/Spinner/Spinner";
 
-class App extends React.Component {
+export class App extends React.Component {
   componentDidMount() {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
     this.props.onAutoLogin(token, userId);
+    this.props.onGetAllPatients();
+    this.props.onFetchEncounters();
   }
 
   render() {
@@ -46,6 +52,8 @@ class App extends React.Component {
         <Route path="/hw-dashboard" component={HWDashboard} />
         <Route path="/patient-dashboard" component={PatientDashboard} />
         <Route path="/encounter" component={Encounter} />
+        <Route path="/my-encounters" component={Encounters} />
+        <Route path="/messenger" component={Messenger} />
         <Route path="/" exact component={Homepage} />
       </Switch>
     );
@@ -62,16 +70,21 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    isAuthenticated: state.auth.token !== null,
     authLoading: state.auth.loading,
     profileLoading: state.profile.loading,
-    isAuthenticated: state.auth.token !== null,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onAutoLogin: (token, userId) =>
-      dispatch(actionCreators.authenticationSuccessful(token, userId)),
+      dispatch(authActionCreators.authenticationSuccessful(token, userId)),
+
+    onGetAllPatients: () => dispatch(patientsActionCreators.getPatients()),
+
+    onFetchEncounters: (email) =>
+      dispatch(encountersActionCreators.fetchEncounters(email)),
   };
 };
 

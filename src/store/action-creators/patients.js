@@ -31,6 +31,13 @@ export const getPatients = () => {
               Math.pow(response.data[key].height / 100, 2),
           });
         }
+
+        if (allPatients.length > 0) {
+          localStorage.setItem("patients", JSON.stringify(allPatients));
+        } else {
+          localStorage.setItem("patients", JSON.stringify([]));
+        }
+
         dispatch(getPatientsSuccessful(allPatients));
       })
       .catch((error) => {
@@ -206,27 +213,13 @@ export const syncGetPatient = (patient) => {
 export const getPatient = (email) => {
   return (dispatch) => {
     dispatch(getPatientsStarted());
-
-    const queryParams = `?orderBy="email"&equalTo="${email}"`;
-
-    axiosInstance
-      .get(`/patients.json${queryParams}`)
-      .then((response) => {
-        const patients = [];
-
-        for (let key in response.data) {
-          patients.push({
-            id: key,
-            ...response.data[key],
-            bmi:
-              response.data[key].weight /
-              Math.pow(response.data[key].height / 100, 2),
-          });
-        }
-        dispatch(syncGetPatient(patients[0]));
-      })
-      .catch((error) => {
-        dispatch(getPatientsFailed(error));
-      });
+    const allPatients = JSON.parse(localStorage.getItem("patients"));
+    const patient = allPatients.find((element) => element.email === email);
+    if (patient) {
+      localStorage.setItem("patient", JSON.stringify(patient));
+      dispatch(syncGetPatient(patient));
+    } else {
+      dispatch(getPatientsFailed("Patient not found."));
+    }
   };
 };

@@ -111,6 +111,7 @@ class HealthWorkerProfile extends React.Component {
 
   submitFormHandler = (event) => {
     event.preventDefault();
+
     let profileData = {};
     for (let prop in this.state.form) {
       profileData[prop] = this.state.form[prop].value;
@@ -152,8 +153,8 @@ class HealthWorkerProfile extends React.Component {
     return (
       <React.Fragment>
         {!this.props.isAuthenticated ? <Redirect to="/login" /> : null}
-        <h3 className="text-muted" style={{ margin: "2em 0 1em 0" }}>
-          Create your profile
+        <h3 className="lead" style={{ margin: "2em 0 1em 0" }}>
+          CREATE A PROFILE
         </h3>
         {form}
       </React.Fragment>

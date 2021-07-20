@@ -121,9 +121,9 @@ const mapDispatchToProps = (dispatch) => {
     onSwitchToPatientUserMode: () =>
       dispatch(userModeActionCreators.switchToPatientUserMode()),
 
-    onLogout: () => dispatch(authActionCreators.logout()),
-
     onGetPatient: (email) => dispatch(patientsActionCreators.getPatient(email)),
+
+    onLogout: () => dispatch(authActionCreators.logout()),
   };
 };
 

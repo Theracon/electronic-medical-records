@@ -16,10 +16,12 @@ const patients = (props) => {
           surname={patient.surname}
           age={patient.age}
           gender={patient.gender}
+          email={patient.email}
           bmi={patient.bmi.toFixed(2)}
           height={patient.height}
           weight={patient.weight}
-          image={patient.image}
+          imageURL={patient.image}
+          getOnePatient={(email) => props.getOnePatient(email)}
         />
       );
     });

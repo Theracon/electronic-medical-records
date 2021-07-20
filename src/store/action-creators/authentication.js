@@ -46,7 +46,7 @@ export const signup = (email, password, props, redirectPath) => {
         props.history.push(redirectPath);
       })
       .catch((error) => {
-        dispatch(authenticationFailed(error.response.data.error));
+        dispatch(authenticationFailed(error));
       });
   };
 };
@@ -66,29 +66,41 @@ export const login = (email, password, props) => {
         userData
       )
       .then((response) => {
+        // Fetch health workers
         axiosInstance
           .get("/doctors.json")
           .then((response) => {
-            const healthWorkers = [];
-
-            for (let key in response.data) {
-              healthWorkers.push(response.data[key]);
-            }
-
-            const emails = healthWorkers.map(
-              (healthWorker) => healthWorker.email
+            const healthWorkers = Object.values(response.data);
+            const user = healthWorkers.find(
+              (healthWorker) => healthWorker.email === email
             );
-
-            if (emails.indexOf(email) >= 0) {
-              localStorage.setItem("email", email);
+            if (user) {
+              localStorage.setItem("email", user.email);
+              localStorage.setItem("name", user.name);
+              localStorage.setItem("surname", user.surname);
               props.history.push("/hw-dashboard");
             } else {
-              localStorage.setItem("email", email);
-              props.history.push("/patient-dashboard");
+              axiosInstance
+                .get("/patients.json")
+                .then((response) => {
+                  const patients = Object.values(response.data);
+                  const user = patients.find(
+                    (patient) => patient.email === email
+                  );
+                  if (user) {
+                    localStorage.setItem("email", user.email);
+                    localStorage.setItem("name", user.name);
+                    localStorage.setItem("surname", user.surname);
+                    props.history.push("/patient-dashboard");
+                  }
+                })
+                .catch((error) => {
+                  dispatch(authenticationFailed(error.message));
+                });
             }
           })
           .catch((error) => {
-            console.log(error);
+            dispatch(authenticationFailed(error));
           });
 
         const expirationDate = new Date(
@@ -103,7 +115,7 @@ export const login = (email, password, props) => {
         dispatch(logout(response.data.expiresIn));
       })
       .catch((error) => {
-        dispatch(authenticationFailed(error.response.data.error));
+        dispatch(authenticationFailed(error));
       });
   };
 };
@@ -133,11 +145,13 @@ export const authLogout = () => {
   localStorage.removeItem("expirationDate");
   localStorage.removeItem("userId");
   localStorage.removeItem("username");
-  localStorage.removeItem("email");
-  localStorage.removeItem("patientName");
   localStorage.removeItem("name");
+  localStorage.removeItem("email");
   localStorage.removeItem("surname");
+  localStorage.removeItem("patientName");
   localStorage.removeItem("patientImage");
+  localStorage.removeItem("patient");
+
   return { type: actionTypes.AUTH_LOGOUT };
 };
 

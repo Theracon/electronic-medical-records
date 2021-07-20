@@ -7,11 +7,11 @@ import * as authActionCreators from "../../../store/action-creators/authenticati
 import * as userModeActionCreators from "../../../store/action-creators/userModes";
 import * as patientsActionCreators from "../../../store/action-creators/patients";
 import * as filterControlsActionCreators from "../../../store/action-creators/filterControls";
+import * as encountersActionCreators from "../../../store/action-creators/encounters";
 import Searchbar from "../../../components/UI/Searchbar/Searchbar";
 import FilterPatients from "../../../components/UI/FilterPatients/FilterPatients";
 import Patients from "../../../components/Patients/Patients";
 import Charts from "../../../components/UI/Charts/Charts";
-import formatName from "../../../shared/utils/formatName";
 
 class HWDashboard extends React.Component {
   state = {
@@ -28,6 +28,7 @@ class HWDashboard extends React.Component {
 
   componentWillMount() {
     this.setState({ patients: this.props.allPatients });
+    this.props.onFetchEncounters();
   }
 
   componentDidMount() {
@@ -38,6 +39,10 @@ class HWDashboard extends React.Component {
     this.props.onSwitchToHWUserMode();
     this.props.onGetPatients();
   }
+
+  onGetOnePatient = (email) => {
+    this.props.onGetOnePatient(email);
+  };
 
   onGetAllPatients = () => {
     this.props.onGetPatients();
@@ -77,15 +82,13 @@ class HWDashboard extends React.Component {
     }
 
     const surname = localStorage.getItem("surname");
-    const name = localStorage.getItem("name");
-    const displayName = formatName(surname, name);
 
     return (
       <React.Fragment>
         {redirectToLogin}
         <div className={styles.DisplayDiv}>
           <p className={styles.DisplayName}>
-            Hello, <span>Dr. {displayName}.</span>
+            Hello, <span>Dr. {surname}.</span>
           </p>
         </div>
         <Searchbar
@@ -103,7 +106,10 @@ class HWDashboard extends React.Component {
             this.onGetPatientsByBMI(bmiFrom, bmiTo)
           }
         />
-        <Patients patients={this.props.allPatients} />
+        <Patients
+          patients={this.props.allPatients}
+          getOnePatient={(email) => this.onGetOnePatient(email)}
+        />
         <Charts />
       </React.Fragment>
     );
@@ -127,6 +133,9 @@ const mapDispatchToProps = (dispatch) => {
     onSwitchToHWUserMode: () =>
       dispatch(userModeActionCreators.switchToHWUserMode()),
 
+    onGetOnePatient: (email) =>
+      dispatch(patientsActionCreators.getPatient(email)),
+
     onGetPatients: () => dispatch(patientsActionCreators.getPatients()),
 
     onGetPatientsByGender: (gender) =>
@@ -147,6 +156,9 @@ const mapDispatchToProps = (dispatch) => {
 
     onGetPatientsByName: (string) =>
       dispatch(patientsActionCreators.getPatientsByName(string)),
+
+    onFetchEncounters: () =>
+      dispatch(encountersActionCreators.fetchEncounters()),
 
     onLogout: () => dispatch(authActionCreators.logout()),
   };

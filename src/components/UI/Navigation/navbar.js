@@ -77,6 +77,17 @@ class Navbar extends React.Component {
             </NavLink>
           </li>
 
+          <li onClick={this.switchUserType}>
+            <NavLink
+              to="/my-encounters"
+              exact
+              activeClassName={styles.Active}
+              style={{ textDecoration: "none" }}
+            >
+              <span style={{ color: "#DFEEEA" }}>ENCOUNTERS</span>
+            </NavLink>
+          </li>
+
           <li>
             <NavLink
               to="/logout"

@@ -14,6 +14,9 @@ import profileReducer from "./store/reducers/createProfile";
 import patientsReducer from "./store/reducers/patients";
 import userModeReducer from "./store/reducers/userModes";
 import filterControlsReducer from "./store/reducers/filterControls";
+import healthWorkersReducer from "./store/reducers/healthWorkers";
+import encounterReducer from "./store/reducers/encounter";
+import encountersReducer from "./store/reducers/encounters";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -25,6 +28,9 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   patients: patientsReducer,
   userMode: userModeReducer,
+  healthWorkers: healthWorkersReducer,
+  encounter: encounterReducer,
+  encounters: encountersReducer,
   filterControls: filterControlsReducer,
 });
 
