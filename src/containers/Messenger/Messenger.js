@@ -7,7 +7,7 @@ class Messenger extends React.Component {
     super(props);
   }
   render() {
-    return <div>MESSENGER</div>;
+    return <div>THIS IS THE MESSENGER</div>;
   }
 }
 
