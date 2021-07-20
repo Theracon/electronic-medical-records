@@ -63,3 +63,23 @@
   border-radius: 50%;
   border: 3px solid #2f5d62;
 }
+
+.DisplayDiv {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1em 1em 1em 0;
+  margin: 0 auto;
+  text-align: right;
+}
+
+.DisplayName {
+  width: fit-content;
+  height: fit-content;
+  font-family: "Poppins", sans-serif;
+}
+
+.DisplayName span {
+  text-decoration: underline;
+}

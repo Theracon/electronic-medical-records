@@ -70,11 +70,21 @@ export const login = (email, password, props) => {
         axiosInstance
           .get("/doctors.json")
           .then((response) => {
+            const UserIds = Object.keys(response.data);
             const healthWorkers = Object.values(response.data);
+
             const user = healthWorkers.find(
               (healthWorker) => healthWorker.email === email
             );
+
+            const userIndex = healthWorkers.findIndex(
+              (healthWorker) => healthWorker.email === email
+            );
+
             if (user) {
+              const userId = UserIds[userIndex];
+
+              localStorage.setItem("uid", userId);
               localStorage.setItem("email", user.email);
               localStorage.setItem("name", user.name);
               localStorage.setItem("surname", user.surname);
@@ -83,11 +93,21 @@ export const login = (email, password, props) => {
               axiosInstance
                 .get("/patients.json")
                 .then((response) => {
+                  const UserIds = Object.keys(response.data);
                   const patients = Object.values(response.data);
+
                   const user = patients.find(
                     (patient) => patient.email === email
                   );
+
+                  const userIndex = patients.findIndex(
+                    (patient) => patient.email === email
+                  );
+
                   if (user) {
+                    const userId = UserIds[userIndex];
+
+                    localStorage.setItem("uid", userId);
                     localStorage.setItem("email", user.email);
                     localStorage.setItem("name", user.name);
                     localStorage.setItem("surname", user.surname);

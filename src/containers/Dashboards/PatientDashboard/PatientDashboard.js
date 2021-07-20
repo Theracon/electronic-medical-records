@@ -16,6 +16,8 @@ class PatientDashboard extends React.Component {
     this.props.onGetPatient(localStorage.getItem("email"));
   }
 
+  loadMessenger = () => this.props.history.push("messenger");
+
   render() {
     const expirationDate = new Date(localStorage.getItem("expirationDate"));
     let redirectToLogin = null;
@@ -96,11 +98,19 @@ class PatientDashboard extends React.Component {
       );
     }
 
+    const name =
+      localStorage.getItem("name") + " " + localStorage.getItem("surname");
+
     return (
       <React.Fragment>
         {redirectToLogin}
+        <div className={styles.DisplayDiv}>
+          <p className={styles.DisplayName}>
+            Hello, <span>{name}.</span>
+          </p>
+        </div>
         <div className={styles.PatientDashboard}>
-          <span className={styles.ChatButton}>
+          <span className={styles.ChatButton} onClick={this.loadMessenger}>
             <i className="fas fa-comment-alt"></i>
           </span>
           {patientProfileUI}
