@@ -31,7 +31,7 @@ class Navbar extends React.Component {
         >
           <div className="container-fluid">
             <div className={styles.HeaderDiv}>
-              <h1 className={styles.HeaderText}>EMR</h1>
+              <h1 className={styles.HeaderText}>em</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
                 style={{ color: "#DFEEEA" }}
@@ -107,7 +107,7 @@ class Navbar extends React.Component {
         >
           <div className="container-fluid">
             <div className={styles.HeaderDiv}>
-              <h1 className={styles.HeaderText}>EMR</h1>
+              <h1 className={styles.HeaderText}>em</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
                 style={{ color: "#DFEEEA" }}
@@ -196,7 +196,7 @@ class Navbar extends React.Component {
         >
           <div className="container-fluid">
             <div className={styles.HeaderDiv}>
-              <h1 className={styles.HeaderText}>EMR</h1>
+              <h1 className={styles.HeaderText}>em</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
                 style={{ color: "#DFEEEA" }}

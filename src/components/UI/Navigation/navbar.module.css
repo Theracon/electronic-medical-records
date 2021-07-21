@@ -6,7 +6,8 @@
 }
 
 .HeaderText {
-  font-family: "Encode Sans SC", sans-serif;
+  letter-spacing: -2px;
+  font-family: "Quicksand", sans-serif;
   font-weight: 700;
   color: #dfeeea;
   margin-right: 5px;

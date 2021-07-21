@@ -6,7 +6,6 @@ import styles from "./Messenger.module.css";
 import Backdrop from "../../components/UI/Backdrop/Backdrop";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import * as authActionCreators from "../../store/action-creators/authentication";
-import * as messengerActionCreators from "../../store/action-creators/messenger";
 
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -43,13 +42,19 @@ const ChatMessage = (props) => {
         {messageClass === styles.Sent ? (
           <span>
             <span className={styles.MessageText}>{text}</span>
-            <span className={styles.MessageTime}>{time}</span>
+            <span className={styles.MessageDateTimeHolder}>
+              <span>{date}</span>
+              <span>{time}</span>
+            </span>
           </span>
         ) : (
           <span>
             <span className={styles.MessageSender}>{sender}</span>
             <span className={styles.MessageText}>{text}</span>
-            <span className={styles.MessageTime}>{time}</span>
+            <span className={styles.MessageDateTimeHolder}>
+              <span>{date}</span>
+              <span>{time}</span>
+            </span>
           </span>
         )}
       </p>
@@ -91,9 +96,16 @@ const ChatRoom = (props) => {
       date: new Date().toLocaleDateString(),
       time: new Date().toLocaleTimeString(),
     });
+
     setFormValue("");
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  const scrollBottomMsgIntoView = (element) => {
+    element.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => scrollBottomMsgIntoView(dummy), [messages]);
 
   let patientChatUI = (
     <React.Fragment>
