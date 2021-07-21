@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import styles from "./App.module.css";
 import * as authActionCreators from "./store/action-creators/authentication";
+import * as healthWorkersActionCreators from "./store/action-creators/healthWorkers";
 import * as patientsActionCreators from "./store/action-creators/patients";
 import * as encountersActionCreators from "./store/action-creators/encounters";
 import Navbar from "./components/UI/Navigation/navbar";
@@ -27,6 +28,7 @@ export class App extends React.Component {
     const userId = localStorage.getItem("userId");
 
     this.props.onAutoLogin(token, userId);
+    this.props.onGetAllDoctors();
     this.props.onGetAllPatients();
     this.props.onFetchEncounters();
   }
@@ -80,6 +82,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAutoLogin: (token, userId) =>
       dispatch(authActionCreators.authenticationSuccessful(token, userId)),
+
+    onGetAllDoctors: () =>
+      dispatch(healthWorkersActionCreators.getHealthWorkers()),
 
     onGetAllPatients: () => dispatch(patientsActionCreators.getPatients()),
 

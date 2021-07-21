@@ -8,6 +8,7 @@ import * as userModeActionCreators from "../../../store/action-creators/userMode
 import * as patientsActionCreators from "../../../store/action-creators/patients";
 import * as filterControlsActionCreators from "../../../store/action-creators/filterControls";
 import * as encountersActionCreators from "../../../store/action-creators/encounters";
+import * as messengerActionCreators from "../../../store/action-creators/messenger";
 import Searchbar from "../../../components/UI/Searchbar/Searchbar";
 import FilterPatients from "../../../components/UI/FilterPatients/FilterPatients";
 import Patients from "../../../components/Patients/Patients";
@@ -42,6 +43,11 @@ class HWDashboard extends React.Component {
 
   onGetOnePatient = (email) => {
     this.props.onGetOnePatient(email);
+  };
+
+  startChatHandler = (patientName, patientId) => {
+    this.props.onchatWithAPatient(patientName, patientId);
+    this.props.history.push("/messenger");
   };
 
   onGetAllPatients = () => {
@@ -109,6 +115,10 @@ class HWDashboard extends React.Component {
         <Patients
           patients={this.props.allPatients}
           getOnePatient={(email) => this.onGetOnePatient(email)}
+          startChat={(patientName, patientId) =>
+            this.startChatHandler(patientName, patientId)
+          }
+          history={this.props.history}
         />
         <Charts />
       </React.Fragment>
@@ -159,6 +169,11 @@ const mapDispatchToProps = (dispatch) => {
 
     onFetchEncounters: () =>
       dispatch(encountersActionCreators.fetchEncounters()),
+
+    onchatWithAPatient: (patientName, patientId) =>
+      dispatch(
+        messengerActionCreators.chatWithAPatient(patientName, patientId)
+      ),
 
     onLogout: () => dispatch(authActionCreators.logout()),
   };

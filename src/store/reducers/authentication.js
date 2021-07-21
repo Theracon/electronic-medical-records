@@ -36,8 +36,12 @@ const authLogout = (state) => {
   });
 };
 
-const switchUserType = (state) => {
+const switchUserTypeToPatient = (state) => {
   return updateObject(state, { userType: "p" });
+};
+
+const switchUserTypeToHW = (state) => {
+  return updateObject(state, { userType: "hw" });
 };
 
 const reducer = (state = initialState, action) => {
@@ -50,8 +54,10 @@ const reducer = (state = initialState, action) => {
       return authenticationFailed(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state);
-    case actionTypes.SWITCH_USER_TYPE:
-      return switchUserType(state);
+    case actionTypes.SWITCH_USER_TYPE_TO_PATIENT:
+      return switchUserTypeToPatient(state);
+    case actionTypes.SWITCH_USER_TYPE_TO_HW:
+      return switchUserTypeToHW(state);
     default:
       return state;
   }

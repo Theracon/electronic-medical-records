@@ -27,6 +27,8 @@ export const createHWProfile = (profileData, props) => {
       )
       .then((response) => {
         profileData.email = response.data.users[0].email;
+        profileData.userId = localStorage.getItem("userId");
+
         axiosInstance
           .post("/doctors.json", profileData)
           .then((response) => {
@@ -58,6 +60,7 @@ export const createPatientProfile = (profileData, props) => {
       )
       .then((response) => {
         profileData.email = response.data.users[0].email;
+
         axiosInstance
           .post("/patients.json", profileData)
           .then((response) => {

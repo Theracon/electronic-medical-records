@@ -22,6 +22,10 @@ const patients = (props) => {
           weight={patient.weight}
           imageURL={patient.image}
           getOnePatient={(email) => props.getOnePatient(email)}
+          startChat={(patientName, patientId) =>
+            props.startChat(patientName, patientId)
+          }
+          history={props.history}
         />
       );
     });

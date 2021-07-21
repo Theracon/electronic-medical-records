@@ -5,7 +5,7 @@ import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import updateObject from "../../shared/utils/updateObject";
 import checkValidity from "../../shared/utils/formValidation";
-import * as actionCreators from "../../store/action-creators/authentication";
+import * as authActionCreators from "../../store/action-creators/authentication";
 
 class Signup extends React.Component {
   state = {
@@ -83,7 +83,8 @@ class Signup extends React.Component {
       this.state.form.email.value,
       this.state.form.password.value,
       this.props,
-      redirectPath
+      redirectPath,
+      this.props.userMode
     );
   };
 
@@ -129,6 +130,7 @@ class Signup extends React.Component {
 const mapStateToProps = (state) => {
   return {
     userType: state.auth.userType,
+    userMode: state.userMode.userMode,
     loading: state.auth.loading,
     error: state.auth.error,
     isAuthenticated: state.auth.token !== null,
@@ -138,7 +140,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSignup: (email, password, props, redirectPath) =>
-      dispatch(actionCreators.signup(email, password, props, redirectPath)),
+      dispatch(authActionCreators.signup(email, password, props, redirectPath)),
   };
 };
 

@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import styles from "./Messenger.module.css";
+import Backdrop from "../../components/UI/Backdrop/Backdrop";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import * as authActionCreators from "../../store/action-creators/authentication";
+import * as messengerActionCreators from "../../store/action-creators/messenger";
 
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -30,50 +33,115 @@ const firebaseConfig = {
 const firestore = firebase.firestore();
 
 const ChatMessage = (props) => {
-  const { text, uid } = props.message;
+  const { date, time, text, uid, sender } = props.message;
   const messageClass =
-    uid === localStorage.getItem("userId") ? styles.Sent : styles.Received;
+    uid === localStorage.getItem("email") ? styles.Sent : styles.Received;
 
   return (
     <div className={`${styles.Message} ${messageClass}`}>
-      <p>{text}</p>
+      <p>
+        {messageClass === styles.Sent ? (
+          <span>
+            <span className={styles.MessageText}>{text}</span>
+            <span className={styles.MessageTime}>{time}</span>
+          </span>
+        ) : (
+          <span>
+            <span className={styles.MessageSender}>{sender}</span>
+            <span className={styles.MessageText}>{text}</span>
+            <span className={styles.MessageTime}>{time}</span>
+          </span>
+        )}
+      </p>
     </div>
   );
 };
 
-const ChatRoom = () => {
+const ChatRoom = (props) => {
   const dummy = useRef();
-
   const messagesRef = firestore.collection("messages");
-  const query = messagesRef.orderBy("createdAt").limit(25);
-
+  const query = messagesRef.orderBy("createdAt").limit(50);
   const [messages] = useCollectionData(query, { idField: "id" });
-
   const [formValue, setFormValue] = useState("");
+
+  let messageReceiver = null;
+  let messageReceiverId = null;
+
+  if (localStorage.getItem("userType") === "hw") {
+    messageReceiver = localStorage.getItem("patientName");
+    messageReceiverId = localStorage.getItem("patientId");
+  } else {
+    messageReceiver = localStorage.getItem("doctorName");
+    messageReceiverId = localStorage.getItem("doctorId");
+  }
 
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const uid = localStorage.getItem("userId");
-
+    const uid = localStorage.getItem("email");
+    const sender =
+      localStorage.getItem("name") + " " + localStorage.getItem("surname");
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
+      sender,
+      receiver: messageReceiver,
+      ruid: messageReceiverId,
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
     });
-
     setFormValue("");
-
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  let patientChatUI = (
+    <React.Fragment>
+      <Backdrop />
+      <Spinner />
+    </React.Fragment>
+  );
+  if (!props.loading) {
+    patientChatUI =
+      messages &&
+      messages
+        .filter(
+          (message) =>
+            (message.uid === localStorage.getItem("email") &&
+              message.ruid === localStorage.getItem("doctorId")) ||
+            (message.ruid === localStorage.getItem("email") &&
+              message.uid === localStorage.getItem("doctorId"))
+        )
+        .map((message) => <ChatMessage key={message.id} message={message} />);
+  }
+
+  let doctorChatUI = (
+    <React.Fragment>
+      <Backdrop />
+      <Spinner />
+    </React.Fragment>
+  );
+  if (!props.loading) {
+    doctorChatUI =
+      messages &&
+      messages
+        .filter(
+          (message) =>
+            (message.uid === localStorage.getItem("email") &&
+              message.ruid === localStorage.getItem("patientId")) ||
+            (message.ruid === localStorage.getItem("email") &&
+              message.uid === localStorage.getItem("patientId"))
+        )
+        .map((message) => <ChatMessage key={message.id} message={message} />);
+  }
+
+  const chatsUI =
+    localStorage.getItem("userType") === "hw" ? doctorChatUI : patientChatUI;
 
   return (
     <React.Fragment>
       <main className={styles.Main}>
-        {messages &&
-          messages.map((message) => (
-            <ChatMessage key={message.id} message={message} />
-          ))}
+        {chatsUI}
 
         <div ref={dummy}></div>
       </main>
@@ -84,9 +152,7 @@ const ChatRoom = () => {
           onChange={(e) => setFormValue(e.target.value)}
         />
         <button type="submit" className={styles.FormButton}>
-          <i
-            className={`fas fa-chevron-circle-right ${styles.FormButtonIcon}`}
-          ></i>
+          <i className={`fas fa-play-circle ${styles.FormButtonIcon}`}></i>
         </button>
       </form>
     </React.Fragment>
@@ -107,11 +173,23 @@ const Messenger = (props) => {
       {redirectToLogin}
       <div className={styles.App}>
         <section className={styles.AppSection}>
-          <ChatRoom />
+          <ChatRoom
+            doctorName={props.doctorName}
+            doctorId={props.doctorId}
+            patientName={props.patientName}
+            patientId={props.patientId}
+            loading={props.loading}
+          />
         </section>
       </div>
     </React.Fragment>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    loading: state.messenger.loading,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -120,4 +198,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Messenger);
+export default connect(mapStateToProps, mapDispatchToProps)(Messenger);
