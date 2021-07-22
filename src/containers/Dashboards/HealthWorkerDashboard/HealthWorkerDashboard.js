@@ -92,7 +92,7 @@ class HWDashboard extends React.Component {
     const surname = localStorage.getItem("surname");
 
     return (
-      <React.Fragment>
+      <div className={styles.Container}>
         {redirectToLogin}
         <div className={styles.DisplayDiv}>
           <p className={styles.DisplayName}>
@@ -123,7 +123,7 @@ class HWDashboard extends React.Component {
           history={this.props.history}
         />
         <Charts />
-      </React.Fragment>
+      </div>
     );
   }
 }

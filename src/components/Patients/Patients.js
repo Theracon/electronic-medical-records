@@ -34,7 +34,7 @@ const patients = (props) => {
     return (
       <div className={styles.Patients}>
         <h3 className="display-6 lead" style={{ marginTop: "2rem" }}>
-          All Patients
+          Patients
         </h3>
         <Spinner style={{ position: "absolute" }} />
       </div>
