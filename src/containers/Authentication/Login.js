@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import styles from "./Authentication.module.css";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import updateObject from "../../shared/utils/updateObject";
@@ -111,16 +112,45 @@ class Signup extends React.Component {
       </form>
     );
 
+    let errorMessage = null;
+    if (this.props.error) {
+      errorMessage = (
+        <div>
+          <p style={{ color: "darkred" }}>
+            {this.props.error.message
+              .replace(/-|_/, " ")
+              .toLowerCase()
+              .slice(0, 1)
+              .toUpperCase() +
+              this.props.error.message
+                .replace(/-|_/, " ")
+                .toLowerCase()
+                .slice(1) +
+              "!"}
+          </p>
+        </div>
+      );
+    }
+
     return (
       <React.Fragment>
         <h3 className="text-muted" style={{ margin: "2em 0 2em 0" }}>
           Log into your account
         </h3>
+        {this.props.error ? (
+          <div className={styles.Auth}>{errorMessage}</div>
+        ) : null}
         {form}
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    error: state.auth.error,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -129,4 +159,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

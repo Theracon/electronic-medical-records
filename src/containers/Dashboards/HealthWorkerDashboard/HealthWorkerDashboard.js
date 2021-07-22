@@ -13,6 +13,8 @@ import Searchbar from "../../../components/UI/Searchbar/Searchbar";
 import FilterPatients from "../../../components/UI/FilterPatients/FilterPatients";
 import Patients from "../../../components/Patients/Patients";
 import Charts from "../../../components/UI/Charts/Charts";
+import withErrorHandler from "../../../hoc/withErrorHandler";
+import axiosInstance from "../../../axios/index";
 
 class HWDashboard extends React.Component {
   state = {
@@ -179,4 +181,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HWDashboard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(HWDashboard, axiosInstance));

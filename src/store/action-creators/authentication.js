@@ -51,7 +51,7 @@ export const signup = (email, password, props, redirectPath, userMode) => {
         props.history.push(redirectPath);
       })
       .catch((error) => {
-        dispatch(authenticationFailed(error));
+        dispatch(authenticationFailed(error.response.data.error));
       });
   };
 };
@@ -126,7 +126,7 @@ export const login = (email, password, props) => {
         dispatch(logout(response.data.expiresIn));
       })
       .catch((error) => {
-        dispatch(authenticationFailed(error));
+        dispatch(authenticationFailed(error.response.data.error));
       });
   };
 };
