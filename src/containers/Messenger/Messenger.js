@@ -168,6 +168,13 @@ const ChatRoom = (props) => {
         <div ref={dummy}></div>
       </main>
       <form className={styles.Form} onSubmit={sendMessage}>
+        <button
+          type="button"
+          className={styles.FormButton}
+          onClick={props.startVideoChat}
+        >
+          <i className={`fas fa-video ${styles.FormButtonIcon}`}></i>
+        </button>
         <input
           className={styles.Input}
           value={formValue}
@@ -190,6 +197,10 @@ const Messenger = (props) => {
     props.onLogout();
   }
 
+  const startVideoChat = (props) => {
+    props.history.push("video-chat");
+  };
+
   return (
     <React.Fragment>
       {redirectToLogin}
@@ -201,6 +212,7 @@ const Messenger = (props) => {
             patientName={props.patientName}
             patientId={props.patientId}
             loading={props.loading}
+            startVideoChat={() => startVideoChat(props)}
           />
         </section>
       </div>

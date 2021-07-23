@@ -33,17 +33,6 @@ class Signup extends React.Component {
         valid: false,
         touched: false,
       },
-      confirmPassword: {
-        elementType: "input",
-        elementConfig: {
-          type: "password",
-          placeholder: "Confirm Password",
-        },
-        value: "",
-        validation: { required: true, passwordsEqual: true },
-        valid: false,
-        touched: false,
-      },
     },
     formIsValid: true,
   };
@@ -146,6 +135,7 @@ class Signup extends React.Component {
           <div className={styles.Auth}>{errorMessage}</div>
         ) : null}
         {form}
+        {this.state.passwordsMatchMessage}
       </React.Fragment>
     );
   }

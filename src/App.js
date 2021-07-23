@@ -1,12 +1,13 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import styles from "./App.module.css";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import styles from "./App.module.css";
 import * as authActionCreators from "./store/action-creators/authentication";
 import * as healthWorkersActionCreators from "./store/action-creators/healthWorkers";
 import * as patientsActionCreators from "./store/action-creators/patients";
 import * as encountersActionCreators from "./store/action-creators/encounters";
+
 import Navbar from "./components/UI/Navigation/navbar";
 import Homepage from "./components/Homepage/Homepage";
 import Signup from "./containers/Authentication/Signup";
@@ -19,6 +20,8 @@ import PatientDashboard from "./containers/Dashboards/PatientDashboard/PatientDa
 import Encounter from "./containers/Encounter/Encounter";
 import Encounters from "./containers/Encounters/Encounters";
 import Messenger from "./containers/Messenger/Messenger";
+import VideoChat from "./containers/VideoChat/frontend/VideoChat";
+
 import Backdrop from "./components/UI/Backdrop/Backdrop";
 import Spinner from "./components/UI/Spinner/Spinner";
 
@@ -56,16 +59,21 @@ export class App extends React.Component {
         <Route path="/encounter" component={Encounter} />
         <Route path="/my-encounters" component={Encounters} />
         <Route path="/messenger" component={Messenger} />
+        <Route path="/video-chat" component={VideoChat} />
         <Route path="/" exact component={Homepage} />
+        <Redirect to="/login" />
       </Switch>
     );
 
     return (
-      <div className={styles.App}>
-        <Navbar />
-        {loadingUI}
-        {routes}
-      </div>
+      <>
+        <Redirect to="/login" />
+        <div className={styles.App}>
+          <Navbar />
+          {loadingUI}
+          {routes}
+        </div>
+      </>
     );
   }
 }
