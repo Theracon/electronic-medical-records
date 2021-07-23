@@ -6,6 +6,7 @@ import styles from "./PatientDashboard.module.css";
 import * as authActionCreators from "../../../store/action-creators/authentication";
 import * as userModeActionCreators from "../../../store/action-creators/userModes";
 import * as patientsActionCreators from "../../../store/action-creators/patients";
+import * as messengerActionCreators from "../../../store/action-creators/messenger";
 import Image from "../../../components/UserPhoto/userPhoto";
 import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -15,6 +16,11 @@ class PatientDashboard extends React.Component {
     this.props.onSwitchToPatientUserMode();
     this.props.onGetPatient(localStorage.getItem("email"));
   }
+
+  loadMessenger = () => {
+    this.props.onRunMessenger();
+    this.props.history.push("messenger");
+  };
 
   render() {
     const expirationDate = new Date(localStorage.getItem("expirationDate"));
@@ -96,11 +102,19 @@ class PatientDashboard extends React.Component {
       );
     }
 
+    const name =
+      localStorage.getItem("name") + " " + localStorage.getItem("surname");
+
     return (
       <React.Fragment>
         {redirectToLogin}
+        <div className={styles.DisplayDiv}>
+          <p className={styles.DisplayName}>
+            Hello, <span>{name}.</span>
+          </p>
+        </div>
         <div className={styles.PatientDashboard}>
-          <span className={styles.ChatButton}>
+          <span className={styles.ChatButton} onClick={this.loadMessenger}>
             <i className="fas fa-comment-alt"></i>
           </span>
           {patientProfileUI}
@@ -122,6 +136,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(userModeActionCreators.switchToPatientUserMode()),
 
     onGetPatient: (email) => dispatch(patientsActionCreators.getPatient(email)),
+
+    onRunMessenger: () => dispatch(messengerActionCreators.runMessenger()),
 
     onLogout: () => dispatch(authActionCreators.logout()),
   };

@@ -17,6 +17,7 @@ import filterControlsReducer from "./store/reducers/filterControls";
 import healthWorkersReducer from "./store/reducers/healthWorkers";
 import encounterReducer from "./store/reducers/encounter";
 import encountersReducer from "./store/reducers/encounters";
+import messengerReducer from "./store/reducers/messenger";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   encounter: encounterReducer,
   encounters: encountersReducer,
   filterControls: filterControlsReducer,
+  messenger: messengerReducer,
 });
 
 const store = createStore(

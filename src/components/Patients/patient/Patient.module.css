@@ -33,15 +33,31 @@
   font-size: 2em;
   margin: 2px 0;
   color: #2f5d62;
+  transition: transform 300ms;
 }
 
-.IconsHolderSpan:hover .HiddenTextDesc {
-  display: inline-block;
+.IconsHolderSpan i:hover {
+  transform: scale(1.2);
 }
 
-.HiddenTextDesc {
-  display: none;
-  font-size: 0.6em;
-  margin-left: 5px;
-  color: #2f5d62;
+@media (max-width: 600px) {
+  .Patient {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+  }
+
+  .Patient h5 {
+    margin-top: 5px;
+  }
+
+  .Patient p:nth-of-type(1) {
+    margin: 10px auto 0px auto;
+  }
+
+  .IconsHolderSpan i {
+    transform: scale(1.5);
+    margin: 0.5em auto;
+  }
 }

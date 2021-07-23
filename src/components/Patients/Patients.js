@@ -22,6 +22,10 @@ const patients = (props) => {
           weight={patient.weight}
           imageURL={patient.image}
           getOnePatient={(email) => props.getOnePatient(email)}
+          startChat={(patientName, patientId) =>
+            props.startChat(patientName, patientId)
+          }
+          history={props.history}
         />
       );
     });
@@ -30,7 +34,7 @@ const patients = (props) => {
     return (
       <div className={styles.Patients}>
         <h3 className="display-6 lead" style={{ marginTop: "2rem" }}>
-          All Patients
+          Patients
         </h3>
         <Spinner style={{ position: "absolute" }} />
       </div>

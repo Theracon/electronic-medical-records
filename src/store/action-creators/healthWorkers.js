@@ -24,6 +24,8 @@ export const getHealthWorkers = () => {
         healthWorkers.push({ id: key, ...response.data[key] });
       }
 
+      localStorage.setItem("doctors", JSON.stringify(healthWorkers));
+
       dispatch(getHWSuccessful(healthWorkers));
     });
   };

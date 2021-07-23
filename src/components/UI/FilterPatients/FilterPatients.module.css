@@ -2,7 +2,7 @@
   position: fixed;
   width: 55%;
   height: 3em;
-  top: 30%;
+  top: 40%;
   left: 1%;
   z-index: 800;
   display: flex;
@@ -44,4 +44,25 @@
   cursor: pointer;
   font-size: 2em;
   color: #2f5d62;
+}
+
+@media (max-width: 600px) {
+  .Container {
+    top: 30vh;
+    width: fit-content;
+    height: 80vh;
+  }
+
+  .Container Input,
+  .Container select {
+    display: block;
+    width: 40vw;
+    margin-left: 0;
+  }
+
+  .Container button {
+    display: block;
+    width: fit-content;
+    margin-left: 0;
+  }
 }

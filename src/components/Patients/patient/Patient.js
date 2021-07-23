@@ -6,9 +6,9 @@ import Image from "../../UserPhoto/userPhoto";
 import formatName from "../../../shared/utils/formatName";
 
 class Patient extends React.Component {
-  componentDidMount() {}
-
   render() {
+    const patientName = this.props.name + " " + this.props.surname;
+
     return (
       <div className={styles.Patient}>
         <div>
@@ -36,10 +36,12 @@ class Patient extends React.Component {
           <p>{this.props.weight}kg</p>
         </div>
         <div className={styles.IconsHolder}>
-          <span className={styles.IconsHolderSpan}>
+          <span
+            className={styles.IconsHolderSpan}
+            onClick={() => this.props.startChat(patientName, this.props.email)}
+          >
             <Link to="/hw-dashboard">
               <i className="fas fa-comment-alt"></i>
-              <small className={styles.HiddenTextDesc}>Start chat</small>
             </Link>
           </span>
           <span
@@ -48,9 +50,6 @@ class Patient extends React.Component {
           >
             <Link to="/encounter">
               <i className="fas fa-file-alt"></i>
-              <small className={styles.HiddenTextDesc}>
-                Create an encounter
-              </small>
             </Link>
           </span>
         </div>

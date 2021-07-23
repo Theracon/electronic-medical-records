@@ -3,3 +3,6 @@
   min-height: 50vh;
   margin-bottom: 10em;
 }
+
+@media (max-width: 600px) {
+}

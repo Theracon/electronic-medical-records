@@ -18,7 +18,7 @@ export const authenticationFailed = (error) => {
   return { type: actionTypes.AUTH_FAIL, error: error };
 };
 
-export const signup = (email, password, props, redirectPath) => {
+export const signup = (email, password, props, redirectPath, userMode) => {
   return (dispatch) => {
     dispatch(authenticationStarted());
     const API_KEY = "AIzaSyCe1DfCRnQlDSoOVOeRE1O9Ck-9tOra4Fg";
@@ -36,17 +36,22 @@ export const signup = (email, password, props, redirectPath) => {
         const expirationDate = new Date(
           new Date().getTime() + response.data.expiresIn * 1000
         );
-        localStorage.setItem("userId", response.data.localId);
-        localStorage.setItem("token", response.data.idToken);
-        localStorage.setItem("expirationDate", expirationDate);
+
         dispatch(
           authenticationSuccessful(response.data.idToken, response.data.localId)
         );
-        dispatch(logout(response.data.expiresIn));
+
+        if (userMode === "hw") {
+          localStorage.setItem("userId", response.data.localId);
+          localStorage.setItem("token", response.data.idToken);
+          localStorage.setItem("expirationDate", expirationDate);
+          dispatch(logout(response.data.expiresIn));
+        }
+
         props.history.push(redirectPath);
       })
       .catch((error) => {
-        dispatch(authenticationFailed(error));
+        dispatch(authenticationFailed(error.response.data.error));
       });
   };
 };
@@ -71,26 +76,32 @@ export const login = (email, password, props) => {
           .get("/doctors.json")
           .then((response) => {
             const healthWorkers = Object.values(response.data);
+
             const user = healthWorkers.find(
               (healthWorker) => healthWorker.email === email
             );
+
             if (user) {
               localStorage.setItem("email", user.email);
               localStorage.setItem("name", user.name);
               localStorage.setItem("surname", user.surname);
+              localStorage.setItem("userType", "hw");
               props.history.push("/hw-dashboard");
             } else {
               axiosInstance
                 .get("/patients.json")
                 .then((response) => {
                   const patients = Object.values(response.data);
+
                   const user = patients.find(
                     (patient) => patient.email === email
                   );
+
                   if (user) {
                     localStorage.setItem("email", user.email);
                     localStorage.setItem("name", user.name);
                     localStorage.setItem("surname", user.surname);
+                    localStorage.setItem("userType", "patient");
                     props.history.push("/patient-dashboard");
                   }
                 })
@@ -115,7 +126,7 @@ export const login = (email, password, props) => {
         dispatch(logout(response.data.expiresIn));
       })
       .catch((error) => {
-        dispatch(authenticationFailed(error));
+        dispatch(authenticationFailed(error.response.data.error));
       });
   };
 };
@@ -163,6 +174,10 @@ export const logout = (expirationTime) => {
   };
 };
 
-export const switchUserType = () => {
-  return { type: actionTypes.SWITCH_USER_TYPE };
+export const switchUserTypeToPatient = () => {
+  return { type: actionTypes.SWITCH_USER_TYPE_TO_PATIENT };
+};
+
+export const switchUserTypeToHW = () => {
+  return { type: actionTypes.SWITCH_USER_TYPE_TO_HW };
 };

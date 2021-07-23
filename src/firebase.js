@@ -1,6 +1,6 @@
 import firebase from "firebase";
 
-const config = {
+const firebaseConfig = {
   apiKey: "AIzaSyCe1DfCRnQlDSoOVOeRE1O9Ck-9tOra4Fg",
   authDomain: "e-med-records.firebaseapp.com",
   databaseURL:
@@ -12,5 +12,5 @@ const config = {
   measurementId: "G-D20RF0J9RF",
 };
 
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 export default firebase;

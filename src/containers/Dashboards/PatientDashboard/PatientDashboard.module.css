@@ -14,6 +14,7 @@
   height: fit-content;
   cursor: pointer;
   transition: transform 500ms;
+  z-index: 100;
 }
 
 .ChatButton:hover,
@@ -37,6 +38,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  z-index: 90;
 }
 
 .ProfileDataText {
@@ -46,6 +48,7 @@
   border-radius: 20px;
   padding: 2em;
   margin: 2em;
+  z-index: 90;
 }
 
 .ProfileDataText div {
@@ -58,8 +61,34 @@
 }
 
 .Photo {
-  width: 170px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   border: 3px solid #2f5d62;
+}
+
+.DisplayDiv {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1em 1em 1em 0;
+  margin: 0 auto;
+  text-align: right;
+}
+
+.DisplayName {
+  width: fit-content;
+  height: fit-content;
+  font-family: "Poppins", sans-serif;
+}
+
+.DisplayName span {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .ProfileDataText {
+    width: 98%;
+  }
 }

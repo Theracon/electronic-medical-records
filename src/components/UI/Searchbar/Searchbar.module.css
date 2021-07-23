@@ -1,6 +1,7 @@
 .Div {
   width: 100%;
   height: 3em;
+  margin-bottom: 50px;
 }
 
 .Form {
@@ -12,10 +13,11 @@
 }
 
 .Form input {
-  padding: 1em;
-  padding-right: 50px;
+  padding: 1.5em;
   height: 100%;
+  border: 3px solid #2f5d62;
   border-radius: 50px;
+  font-family: "Poppins", sans-serif;
 }
 
 .Form input:focus {
@@ -25,7 +27,7 @@
 .Input {
   display: block;
   margin: 0 auto;
-  width: 30vw;
+  width: 100%;
   padding: 1.5em;
   border: 1px solid #2f5d62;
   border-radius: 20px;
@@ -40,6 +42,6 @@
 
 @media (max-width: 600px) {
   .Form {
-    width: 100%;
+    width: 80%;
   }
 }

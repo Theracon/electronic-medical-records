@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import styles from "./Authentication.module.css";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import updateObject from "../../shared/utils/updateObject";
 import checkValidity from "../../shared/utils/formValidation";
-import * as actionCreators from "../../store/action-creators/authentication";
+import * as authActionCreators from "../../store/action-creators/authentication";
 
 class Signup extends React.Component {
   state = {
@@ -83,7 +84,8 @@ class Signup extends React.Component {
       this.state.form.email.value,
       this.state.form.password.value,
       this.props,
-      redirectPath
+      redirectPath,
+      this.props.userMode
     );
   };
 
@@ -115,11 +117,34 @@ class Signup extends React.Component {
       </form>
     );
 
+    let errorMessage = null;
+    if (this.props.error) {
+      errorMessage = (
+        <div>
+          <p style={{ color: "darkred" }}>
+            {this.props.error.message
+              .replace(/-|_/, " ")
+              .toLowerCase()
+              .slice(0, 1)
+              .toUpperCase() +
+              this.props.error.message
+                .replace(/-|_/, " ")
+                .toLowerCase()
+                .slice(1) +
+              "!"}
+          </p>
+        </div>
+      );
+    }
+
     return (
       <React.Fragment>
         <h3 className="text-muted" style={{ margin: "2em 0 1em 0" }}>
           Create an account
         </h3>
+        {this.props.error ? (
+          <div className={styles.Auth}>{errorMessage}</div>
+        ) : null}
         {form}
       </React.Fragment>
     );
@@ -129,16 +154,15 @@ class Signup extends React.Component {
 const mapStateToProps = (state) => {
   return {
     userType: state.auth.userType,
-    loading: state.auth.loading,
+    userMode: state.userMode.userMode,
     error: state.auth.error,
-    isAuthenticated: state.auth.token !== null,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onSignup: (email, password, props, redirectPath) =>
-      dispatch(actionCreators.signup(email, password, props, redirectPath)),
+      dispatch(authActionCreators.signup(email, password, props, redirectPath)),
   };
 };
 
