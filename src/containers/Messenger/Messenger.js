@@ -84,8 +84,18 @@ const ChatRoom = (props) => {
     e.preventDefault();
 
     const uid = localStorage.getItem("email");
-    const sender =
-      localStorage.getItem("name") + " " + localStorage.getItem("surname");
+
+    let sender = "";
+    if (localStorage.getItem("userType") === "hw") {
+      sender = `Dr. ${localStorage.getItem("name")} ${localStorage.getItem(
+        "surname"
+      )}`;
+    } else {
+      sender = `${localStorage.getItem("name")} ${localStorage.getItem(
+        "surname"
+      )}`;
+    }
+
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -93,7 +103,7 @@ const ChatRoom = (props) => {
       sender,
       receiver: messageReceiver,
       ruid: messageReceiverId,
-      date: new Date().toLocaleDateString(),
+      date: new Date().toLocaleDateString("en-NG"),
       time: new Date().toLocaleTimeString(),
     });
 
