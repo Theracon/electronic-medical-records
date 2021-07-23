@@ -31,7 +31,7 @@ class Navbar extends React.Component {
         >
           <div className="container-fluid">
             <div className={styles.HeaderDiv}>
-              <h1 className={styles.HeaderText}>em</h1>
+              <h1 className={styles.HeaderText}>EM</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
                 style={{ color: "#DFEEEA" }}
@@ -58,16 +58,6 @@ class Navbar extends React.Component {
               id="navbarSupportedContent"
             >
               <ul className={styles.List}>
-                <li>
-                  <NavLink
-                    to="/"
-                    exact
-                    activeClassName={styles.Active}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <span style={{ color: "#DFEEEA" }}>HOME</span>
-                  </NavLink>
-                </li>
                 <li>
                   <NavLink
                     to="/login"
@@ -107,7 +97,7 @@ class Navbar extends React.Component {
         >
           <div className="container-fluid">
             <div className={styles.HeaderDiv}>
-              <h1 className={styles.HeaderText}>em</h1>
+              <h1 className={styles.HeaderText}>EM (HW)</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
                 style={{ color: "#DFEEEA" }}
@@ -196,7 +186,7 @@ class Navbar extends React.Component {
         >
           <div className="container-fluid">
             <div className={styles.HeaderDiv}>
-              <h1 className={styles.HeaderText}>em</h1>
+              <h1 className={styles.HeaderText}>EM (Patient)</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
                 style={{ color: "#DFEEEA" }}

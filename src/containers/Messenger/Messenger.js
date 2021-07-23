@@ -84,8 +84,18 @@ const ChatRoom = (props) => {
     e.preventDefault();
 
     const uid = localStorage.getItem("email");
-    const sender =
-      localStorage.getItem("name") + " " + localStorage.getItem("surname");
+
+    let sender = "";
+    if (localStorage.getItem("userType") === "hw") {
+      sender = `Dr. ${localStorage.getItem("name")} ${localStorage.getItem(
+        "surname"
+      )}`;
+    } else {
+      sender = `${localStorage.getItem("name")} ${localStorage.getItem(
+        "surname"
+      )}`;
+    }
+
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -93,7 +103,7 @@ const ChatRoom = (props) => {
       sender,
       receiver: messageReceiver,
       ruid: messageReceiverId,
-      date: new Date().toLocaleDateString(),
+      date: new Date().toLocaleDateString("en-NG"),
       time: new Date().toLocaleTimeString(),
     });
 
@@ -158,6 +168,13 @@ const ChatRoom = (props) => {
         <div ref={dummy}></div>
       </main>
       <form className={styles.Form} onSubmit={sendMessage}>
+        <button
+          type="button"
+          className={styles.FormButton}
+          onClick={props.startVideoChat}
+        >
+          <i className={`fas fa-video ${styles.FormButtonIcon}`}></i>
+        </button>
         <input
           className={styles.Input}
           value={formValue}
@@ -180,6 +197,10 @@ const Messenger = (props) => {
     props.onLogout();
   }
 
+  const startVideoChat = (props) => {
+    props.history.push("video-chat");
+  };
+
   return (
     <React.Fragment>
       {redirectToLogin}
@@ -191,6 +212,7 @@ const Messenger = (props) => {
             patientName={props.patientName}
             patientId={props.patientId}
             loading={props.loading}
+            startVideoChat={() => startVideoChat(props)}
           />
         </section>
       </div>
