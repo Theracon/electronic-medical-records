@@ -27,6 +27,8 @@
 .CallButton {
   text-align: center;
   margin-top: 2rem;
+  background-color: #eee;
+  border-radius: 20px;
 }
 
 .VideoContainer {

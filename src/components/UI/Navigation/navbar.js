@@ -91,9 +91,7 @@ class Navbar extends React.Component {
           </div>
         </nav>
       );
-    }
-
-    if (userType === "hw" && this.props.isAuthenticated) {
+    } else if (this.props.isAuthenticated && userType === "hw") {
       return (
         <nav
           className="navbar navbar-expand-lg"
@@ -183,9 +181,7 @@ class Navbar extends React.Component {
           </div>
         </nav>
       );
-    }
-
-    if (userType === "patient" && this.props.isAuthenticated) {
+    } else if (this.props.isAuthenticated && userType === "patient") {
       return (
         <nav
           className="navbar navbar-expand-lg"
@@ -252,6 +248,12 @@ class Navbar extends React.Component {
             </div>
           </div>
         </nav>
+      );
+    } else {
+      return (
+        <p className="lead text-center">
+          Navbar not displaying due to an internal error.
+        </p>
       );
     }
   }

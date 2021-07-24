@@ -108,7 +108,7 @@ const VideoChat = () => {
         className="lead text-muted"
         style={{ textAlign: "center", fontWeight: "bold" }}
       >
-        VIDEO CALL (Beta)
+        VIDEO CALL (BETA)
       </h1>
       <div className={styles.Container}>
         <div className={styles.VideoContainer}>
@@ -151,23 +151,55 @@ const VideoChat = () => {
             onChange={(e) => setName(e.target.value)}
             style={{ marginBottom: "20px" }}
           />
-          <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AssignmentIcon fontSize="large" />}
+
+          <div
+            style={{
+              width: "100%",
+              border: "1px solid #eee",
+              borderRadius: "5px",
+              padding: "10px",
+            }}
+          >
+            <p className="lh-1 lead">YOUR ID:</p>
+
+            <p
+              className="lead text-center lh-1 bg-dark text-white"
+              style={{ padding: "20px" }}
             >
-              Copy ID
-            </Button>
-          </CopyToClipboard>
+              {me}
+            </p>
+
+            <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AssignmentIcon fontSize="large" />}
+              >
+                Copy to clipboard
+              </Button>
+            </CopyToClipboard>
+            <br />
+          </div>
+          <br />
+          <small
+            className="text-muted"
+            style={{
+              fontSize: "14px",
+            }}
+          >
+            Give your ID to the user who wants to call you, or paste theirs
+            below to call them.
+          </small>
+          <br />
 
           <TextField
             id="filled-basic"
-            label="ID to call"
+            label="ID of user to call"
             variant="filled"
             value={idToCall}
             onChange={(e) => setIdToCall(e.target.value)}
           />
+
           <div className={styles.CallButton}>
             {callAccepted && !callEnded ? (
               <Button variant="contained" color="secondary" onClick={leaveCall}>
@@ -179,7 +211,7 @@ const VideoChat = () => {
                 aria-label="call"
                 onClick={() => callUser(idToCall)}
               >
-                <PhoneIcon fontSize="large" />
+                <PhoneIcon fontSize="large" /> call user
               </IconButton>
             )}
             {idToCall}
@@ -189,7 +221,7 @@ const VideoChat = () => {
           {receivingCall && !callAccepted ? (
             <div className={styles.Caller}>
               <h1 className="lead" style={{ color: "black" }}>
-                INCOMING CALL: {name}
+                INCOMING CALL {name}
               </h1>
               <Button variant="contained" color="primary" onClick={answerCall}>
                 Answer

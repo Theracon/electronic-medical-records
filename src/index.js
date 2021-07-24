@@ -19,10 +19,7 @@ import encounterReducer from "./store/reducers/encounter";
 import encountersReducer from "./store/reducers/encounters";
 import messengerReducer from "./store/reducers/messenger";
 
-const composeEnhancers =
-  process.env.NODE_ENV === "development"
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : null || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   auth: authReducer,
