@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import styles from "./navbar.module.css";
 import * as authctionCreators from "../../../store/action-creators/authentication";
@@ -14,6 +15,10 @@ class Navbar extends React.Component {
 
   switchToHWUserType = () => {
     this.props.onSwitchToHWUserType();
+  };
+
+  goToHomePage = (history) => {
+    history.push("/");
   };
 
   render() {
@@ -30,7 +35,10 @@ class Navbar extends React.Component {
           }}
         >
           <div className="container-fluid">
-            <div className={styles.HeaderDiv}>
+            <div
+              className={styles.HeaderDiv}
+              onClick={() => this.goToHomePage(this.props.history)}
+            >
               <h1 className={styles.HeaderText}>EM</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
@@ -96,7 +104,10 @@ class Navbar extends React.Component {
           }}
         >
           <div className="container-fluid">
-            <div className={styles.HeaderDiv}>
+            <div
+              className={styles.HeaderDiv}
+              onClick={() => this.goToHomePage(this.props.history)}
+            >
               <h1 className={styles.HeaderText}>EM (HW)</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
@@ -185,7 +196,10 @@ class Navbar extends React.Component {
           }}
         >
           <div className="container-fluid">
-            <div className={styles.HeaderDiv}>
+            <div
+              className={styles.HeaderDiv}
+              onClick={() => this.goToHomePage(this.props.history)}
+            >
               <h1 className={styles.HeaderText}>EM (Patient)</h1>
               <i
                 className={"fas fa-stethoscope " + styles.Logo}
@@ -263,4 +277,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

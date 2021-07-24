@@ -130,13 +130,8 @@ class HWDashboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token !== null,
-    loading: state.patients.loading,
     showFilterControls: state.filterControls.showControls,
-    patientsHeading: state.patients.patientsHeading,
     allPatients: state.patients.allPatients,
-    malePatients: state.patients.malePatients,
-    femalePatients: state.patients.femalePatients,
   };
 };
 

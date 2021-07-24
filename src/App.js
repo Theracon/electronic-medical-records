@@ -67,7 +67,6 @@ export class App extends React.Component {
 
     return (
       <>
-        <Redirect to="/login" />
         <div className={styles.App}>
           <Navbar />
           {loadingUI}
@@ -80,7 +79,6 @@ export class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token !== null,
     authLoading: state.auth.loading,
     profileLoading: state.profile.loading,
   };
