@@ -133,6 +133,29 @@ const VideoChat = () => {
               />
             ) : null}
           </div>
+          <div className={styles.CallerContainer}>
+            {receivingCall && !callAccepted ? (
+              <div className={styles.Caller}>
+                <h1
+                  className="display-6 text-white"
+                  style={{
+                    color: "black",
+                    fontFamily: '"Poppins", sans-serif',
+                  }}
+                >
+                  Incoming call... {name}
+                </h1>
+                <br />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={answerCall}
+                >
+                  Accept call
+                </Button>
+              </div>
+            ) : null}
+          </div>
         </div>
         <div className={styles.MyId}>
           <TextField
@@ -211,23 +234,11 @@ const VideoChat = () => {
                 aria-label="call"
                 onClick={() => callUser(idToCall)}
               >
-                <PhoneIcon fontSize="large" /> call user
+                <PhoneIcon fontSize="large" /> call
               </IconButton>
             )}
             {idToCall}
           </div>
-        </div>
-        <div>
-          {receivingCall && !callAccepted ? (
-            <div className={styles.Caller}>
-              <h1 className="lead" style={{ color: "black" }}>
-                INCOMING CALL {name}
-              </h1>
-              <Button variant="contained" color="primary" onClick={answerCall}>
-                Answer
-              </Button>
-            </div>
-          ) : null}
         </div>
       </div>
     </React.Fragment>

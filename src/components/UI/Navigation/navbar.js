@@ -106,9 +106,9 @@ class Navbar extends React.Component {
               className={styles.HeaderDiv}
               onClick={() => this.goToHomePage(this.props.history)}
             >
-              <h1 className={styles.HeaderText}>EM (HW)</h1>
+              <h1 className={styles.HeaderText}>EMR</h1>
               <i
-                className={"fas fa-stethoscope " + styles.Logo}
+                className={"fas fa-user-md " + styles.Logo}
                 style={{ color: "#DFEEEA" }}
               ></i>
             </div>
@@ -196,9 +196,9 @@ class Navbar extends React.Component {
               className={styles.HeaderDiv}
               onClick={() => this.goToHomePage(this.props.history)}
             >
-              <h1 className={styles.HeaderText}>EM (Patient)</h1>
+              <h1 className={styles.HeaderText}>EMR</h1>
               <i
-                className={"fas fa-stethoscope " + styles.Logo}
+                className={"fas fa-procedures " + styles.Logo}
                 style={{ color: "#DFEEEA" }}
               ></i>
             </div>

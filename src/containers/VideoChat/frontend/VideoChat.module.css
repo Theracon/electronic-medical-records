@@ -37,7 +37,6 @@
   grid-template-columns: 1fr 1fr;
   justify-content: center;
   align-content: center;
-  margin-top: 10rem;
   margin-left: 10rem;
 }
 
@@ -45,9 +44,25 @@
   width: 100%;
 }
 
+.CallerContainer {
+  background: rgb(102, 121, 9);
+  background: linear-gradient(
+    180deg,
+    rgba(102, 121, 9, 1) 0%,
+    rgba(75, 89, 13, 1) 2%,
+    rgba(59, 69, 15, 1) 32%,
+    rgba(2, 1, 23, 1) 98%,
+    rgba(198, 255, 0, 1) 100%
+  );
+  border-radius: 5px;
+}
+
 .Caller {
   text-align: center;
-  color: #fff;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+  padding: 1em;
 }
 
 @media (max-width: 600px) {
@@ -61,6 +76,11 @@
   .VideoContainer {
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+  }
+
+  .Video {
+    width: 95%;
     margin: 0 auto;
   }
 
